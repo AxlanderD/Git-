@@ -51,7 +51,6 @@ git commit -a : 自动把所有跟踪过的文件暂存并提交，跳过git add
 这条命令会从暂存区删除对该文件的跟踪，并且从工作目录中删除该文件！
 如果只是从暂存区中删除跟踪状态，使用git rm -cached命令
 git rm -f <fileName> : 强制删除 (危险命令，谨慎使用！！！)
-
 git rm -cached <fileName> : 只会从暂存区中删除跟踪
 
 ##git commit --amend
@@ -83,10 +82,53 @@ git pull操作等价于 git fetch + git merge，相当于后面两者的合并�
 ##git remote add <shortName> <url>
 添加一个对应的简称和对应的远程仓库链接
 
+##git remote rename <旧分支名> <新分支名>
+重命名关联的远程仓库的本地简称
+
+##git remote remove <shortName>
+删除本地的远程仓库关联
+
+##git remote show <shortName>
+显示远程仓库相关信息，展示本地分支和远程分支的关联。比如本地对应分支fetch/push的对应分支等信息
+
 ##git fetch <url> <分支名>
 url可以通过之前的远程仓库关联，改为使用shortName。
 分支名默认和本地分支名相同，但是可以通过 XXXX 设置本地分支和远程分支关联。
 这个操作不会自动merge，如果需要自动merge，使用git pull。可以将其他分支上的数据抓取后自动同步
+
+## 标签操作
+Git中存在两种标签。一、轻量级标签  二、附注标签
+
+##git tag
+列出所有已有标签
+git tag -l “正则匹配模板”:根据规则进行匹配
+
+通过标签信息，可以快速找到那个版本的提交。像是特定版本，分支的标注
+
+##git tag -a 标签名 -m “附加信息”
+创建附注标签
+
+##git tag 标签名
+创建轻量标签
+
+##git tag -a 标签名 校验值
+校验值是指提交的时候产生的hash校验值。
+这条命令可以对历史提交进行追加标签标注
+
+##git tag -d 标签名
+删除指定标签，仅对本地仓库进行操作
+git push origin :refs/tags/<tagname> : 这种方式，将前面的空值传到远程仓库覆盖更新远程仓库的标签
+git push origin --delete <tagname>   : 更加直观地删除远程仓库的标签
+##git show 标签名
+展示特定标签信息
+
+##git push <shortName> <tagName>
+一般的推送不会默认把标签推送上去，可以使用这条命令进行推送
+git push <shortName> --tags : 将不在远程仓库上的所有标签全部推送到远程仓库
+=======================================================================
+
+#分支操作
+
 
 =======================================================================
 
@@ -98,12 +140,25 @@ git mv 原名 新名
 
 =======================================================================
 
+
 #其他
-设置git忽略文件 
+
+##设置命令别名
+git config --global alias.别名 命令名
+例如：git config --global alias.unstage ‘reset HEAD --’
+git unstage fileName
+等价于
+git reset HEAD -- fileName
+将文件从暂存区移除
+
+
+##设置git忽略文件 
 创建.gitignore文件，在该文件中设置需要忽略的文件或者文件夹的格式（使用正则表达式进行匹配）
 
-在服务器上搭建Git
+##在服务器上搭建Git
 钩子设置(hook):当某些预期的动作执行后触发钩子操作
 
+
+=======================================================================
 Git文档网址
 https://www.git-scm.com
