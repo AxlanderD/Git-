@@ -1,6 +1,0 @@
-1.查看状态
-git status
-
-2.拉取远程分支
-git pull origin 分支名
-
